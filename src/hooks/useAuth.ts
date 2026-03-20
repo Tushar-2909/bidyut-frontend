@@ -116,7 +116,6 @@ export function useAuthProvider() {
           email,
           username,
           password,
-          role: "user", // 🔥 Force user only
         });
 
         toast({

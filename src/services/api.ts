@@ -3,8 +3,10 @@ import axios, { AxiosRequestConfig } from "axios";
 // ------------------------------
 // BASE CONFIG
 // ------------------------------
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://bidyut-backend-q1qq.onrender.com"
+).replace(/\/+$/, "");
 
 // Main API instance
 const api = axios.create({
@@ -94,7 +96,6 @@ export interface RegisterPayload {
   email: string;
   username: string;
   password: string;
-  role?: "user";
 }
 
 export interface UserProfile {
@@ -117,12 +118,8 @@ export const authApi = {
   login: (payload: LoginPayload) =>
     api.post<AuthTokens>("/api/login/", payload),
 
-  // REGISTER (ONLY USER)
   register: (payload: RegisterPayload) =>
-    api.post("/api/register/", {
-      ...payload,
-      role: "user",
-    }),
+    api.post("/api/register/", payload),
 
   getProfile: () =>
     api.get<UserProfile>("/api/profile/"),
